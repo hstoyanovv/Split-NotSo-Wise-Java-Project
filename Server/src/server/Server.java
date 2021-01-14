@@ -11,11 +11,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Server {
 
     private static final int SERVER_PORT = 8080;
-    private static final Map<String, ClientRequestHandler> onlineUsers = new ConcurrentHashMap<>();
-    private static final Map<String, String> registeredUsers = new ConcurrentHashMap<>();
+    private final Map<String, ClientRequestHandler> onlineUsers = new ConcurrentHashMap<>();
+    private final Map<String, String> registeredUsers = new ConcurrentHashMap<>();
     private static int size = 0;
 
-    static void readUsers() {
+    void readUsers() {
         final String filename = "Login.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(filename));) {
             String line;
@@ -30,8 +30,7 @@ public class Server {
         }
     }
 
-    public static void main(String[] args) {
-
+    void runServer() {
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT);) {
 
             System.out.println("Server started and listening for connect requests");
@@ -53,4 +52,8 @@ public class Server {
         }
     }
 
+    public static void main(String[] args) {
+        Server server = new Server();
+        server.runServer();
+    }
 }
