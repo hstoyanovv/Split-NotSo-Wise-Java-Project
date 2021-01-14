@@ -161,13 +161,12 @@ public class ClientRequestHandler implements Runnable {
     public void validateStatus() {
         try {
             boolean validateStatus = false;
-            synchronized (in) {
                 while (!validateStatus) {
                     String nickname = in.readLine(); // set name and password
                     String userPassword = in.readLine();
                     validateStatus = validateUser(nickname, userPassword);
                 }
-            }
+            
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
