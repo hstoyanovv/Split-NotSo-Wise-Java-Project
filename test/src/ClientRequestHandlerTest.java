@@ -1,4 +1,5 @@
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import server.ClientRequestHandler;
 
@@ -14,21 +15,21 @@ import static org.junit.Assert.assertEquals;
 
 
 public class ClientRequestHandlerTest {
-    final String mimi = "Mimi";
-    final String icko = "Icko";
-    final String misho = "Misho";
-    final String mimiPassword = "88";
-    final String ickoPassword = "333";
-    final String mishoPassword = "123";
-    final int mimiNumber = 0;
-    final int ickoNumber = 1;
-    final int mishoNumber = 2;
+    static final String mimi = "Mimi";
+    static final String icko = "Icko";
+    static final String misho = "Misho";
+    static final String mimiPassword = "88";
+    static final String ickoPassword = "333";
+    static final String mishoPassword = "123";
+    static final int mimiNumber = 0;
+    static final int ickoNumber = 1;
+    static final int mishoNumber = 2;
 
-    Map<String, ClientRequestHandler> onlineUsers = new ConcurrentHashMap<>();
-    Map<String, String> registeredUsers = new ConcurrentHashMap<>();
+    static final Map<String, ClientRequestHandler> onlineUsers = new ConcurrentHashMap<>();
+    static final Map<String, String> registeredUsers = new ConcurrentHashMap<>();
 
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void setUp() {
         try (ServerSocket serverSocket = new ServerSocket(222);
              Socket socket = new Socket("localhost", 222);) {
             ClientRequestHandler userMimi = new ClientRequestHandler(socket, onlineUsers, registeredUsers, mimiNumber);
@@ -210,3 +211,4 @@ public class ClientRequestHandlerTest {
 
     }
 }
+
