@@ -15,7 +15,7 @@ public class Server {
     private final Map<String, String> registeredUsers = new ConcurrentHashMap<>();
     private static int size = 0;
 
-    void readUsers() {
+    void loadUsers() {
         final String filename = "Login.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(filename));) {
             String line;
@@ -34,7 +34,7 @@ public class Server {
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT);) {
 
             System.out.println("Server started and listening for connect requests");
-            readUsers();
+            loadUsers();
 
             Socket clientSocket;
 
