@@ -24,14 +24,19 @@ public class ClientRequestHandlerTest {
     static final int mimiNumber = 0;
     static final int ickoNumber = 1;
     static final int mishoNumber = 2;
+    static final String HOST = "localhost";
+    static final int PORT = 222;
 
     static final Map<String, ClientRequestHandler> onlineUsers = new ConcurrentHashMap<>();
     static final Map<String, String> registeredUsers = new ConcurrentHashMap<>();
+    static ServerSocket serverSocket;
+    static Socket socket;
 
     @BeforeClass
     public static void setUp() {
-        try (ServerSocket serverSocket = new ServerSocket(222);
-             Socket socket = new Socket("localhost", 222);) {
+        try {
+            serverSocket = new ServerSocket(PORT);
+            socket = new Socket(HOST, PORT);
             ClientRequestHandler userMimi = new ClientRequestHandler(socket, onlineUsers, registeredUsers, mimiNumber);
             ClientRequestHandler userIcko = new ClientRequestHandler(socket, onlineUsers, registeredUsers, ickoNumber);
             ClientRequestHandler userMisho = new ClientRequestHandler(socket, onlineUsers, registeredUsers, mishoNumber);
@@ -149,10 +154,8 @@ public class ClientRequestHandlerTest {
 
     @Test
     public void testValidteIfNotRegister() {
-        final String host = "localhost";
-        try (ServerSocket serverSocket = new ServerSocket(222);
-             Socket socket = new Socket(host, 222);) {
-            final int clientNumber = 4;
+        final int clientNumber = 4;
+        try (Socket socket = new Socket(HOST, PORT)) {
             ClientRequestHandler client = new ClientRequestHandler(socket, onlineUsers, registeredUsers, clientNumber);
             onlineUsers.put(clientNumber + "", client);
             final String userName = "Pesho";
@@ -167,9 +170,7 @@ public class ClientRequestHandlerTest {
 
     @Test
     public void testValidateIfRegister() {
-        final String host = "localhost";
-        try (ServerSocket serverSocket = new ServerSocket(333);
-             Socket socket = new Socket(host, 333);) {
+        try (Socket socket = new Socket(HOST, PORT)) {
             final int clientNumber = 5;
             final String userName = "Petko";
             final String userPassword = "888";
@@ -208,7 +209,15 @@ public class ClientRequestHandlerTest {
         final double expectedAmount = 1.0;
 
         assertTrue(actualAmount == expectedAmount);
+    }
 
+    @AfterClass
+    public static void closeUp() {
+        try {
+            serverSocket.close();
+            socket.close();
+        } catch (IOException e) {
+            e.getMessage();
+        }
     }
 }
-
