@@ -1,6 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
-import server.and.client.ClientRequestHandler;
+import server.ClientRequestHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
