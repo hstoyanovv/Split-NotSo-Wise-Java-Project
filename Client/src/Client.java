@@ -16,7 +16,7 @@ public class Client implements Runnable {
         try (Socket s = new Socket("localhost", SERVER_PORT);
              PrintWriter writer = new PrintWriter(s.getOutputStream(), true); // autoflush on
              Scanner scanner = new Scanner(System.in);) {
-            socket = s;
+             socket = s;
 
             Thread t = new Thread(new Client());
             t.start();
