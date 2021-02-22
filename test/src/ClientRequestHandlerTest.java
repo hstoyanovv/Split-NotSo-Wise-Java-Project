@@ -21,7 +21,6 @@ public class ClientRequestHandlerTest {
     static final String mimiPassword = "88";
     static final String ickoPassword = "333";
     static final String mishoPassword = "123";
-    static final String mishoPasswor = "444";
     static final int mimiNumber = 0;
     static final int ickoNumber = 1;
     static final int mishoNumber = 2;
